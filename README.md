@@ -44,7 +44,7 @@ citation to the accompanying competition report:
 ```bibtex
 @inproceedings{tom2024occluded,
    authors = {Tom, George and Mathew, Minesh and
-   Mondal, Ajoy and Karatzas, Dimosthenes and Jawahar, C. V. and Weinman, Jerod}
+   Mondal, Ajoy and Karatzas, Dimosthenis and Jawahar, C. V. and Weinman, Jerod}
    title = {ICDAR2024 Challenge on Occluded RoadText}
    note = {Forthcoming}
    year = {2024}
@@ -52,13 +52,17 @@ citation to the accompanying competition report:
 ```
 
 For background on the general form of evaluation, please consult the [upstream
-repository](https://github.com/weinman/rrc-evaluation) and/or its accompanying paper:
+repository](https://github.com/weinman/rrc-evaluation) and/or its [accompanying paper](https://weinman.cs.grinnell.edu/pubs/weinman24counting.pdf):
 
 ```bibtex
 @inproceedings{ weinman2024counting,
-   authors = {Weinman, Jerod and {Gómez Grabowska}, Amelia and Karatzas, Dimosthenes}
-   title = {Counting the corner cases: Revisiting robust reading challenge data sets, evaluation protocols, and metrics}
-   note = {Under review}
+   authors = {Weinman, Jerod and Gómez Grabowska, Amelia and Karatzas, Dimosthenis},
+   title = {Counting the corner cases: Revisiting robust reading challenge data sets, evaluation protocols, and metrics},
+   booktitle = {18th International Conference on Document Analysis and Recognition ({ICDAR} 2024)},
+   series = {Lecture Notes in Computer Science},
+   publisher = {Springer},
+   location = {Athens, Greece},
    year = {2024}
+   note = {To appear}
 }
 ```
