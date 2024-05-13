@@ -420,6 +420,12 @@ def get_final_stats(totals: dict[str,Number],
                              totals['total_gt'],
                              totals['total_pred'],
                              totals['total_tightness'])
+
+    # occluded = occluded_visible + occluded_indeterminate + occluded_indeterminate
+    # For Task 2(singledetrec) we dont consider occluded occluded_indeterminate for 
+    # ranking. So for recall calculation:
+    # total_tp_occluded = tp_occluded_visible + tp_occluded_inferable
+    # total_ht_occluded = gt_occluded_visible + gt_occluded_inferable
     if task == "singledetrec":
         final_stats.update(
             get_occluded_stats(
@@ -430,6 +436,7 @@ def get_final_stats(totals: dict[str,Number],
             )
         )
     else:
+    # For Task 1(det) and Task 2(detrec) consider all occluded instances for ranking
         final_stats.update(
             get_occluded_stats(
                 totals["tp_occluded"],
@@ -438,6 +445,8 @@ def get_final_stats(totals: dict[str,Number],
                 "occluded",
             )
         )
+
+    # Calculate recall for occluded_visible
     final_stats.update(
         get_occluded_stats(
             totals["tp_occluded_visible"],
@@ -447,6 +456,8 @@ def get_final_stats(totals: dict[str,Number],
             include_fscore=False,
         )
     )
+
+    # Calculate recall for occluded_inferable
     final_stats.update(
         get_occluded_stats(
             totals["tp_occluded_inferable"],
@@ -456,6 +467,8 @@ def get_final_stats(totals: dict[str,Number],
             include_fscore=False,
         )
     )
+
+    # Calculate recall for occluded_indeterminate
     final_stats.update(
         get_occluded_stats(
             totals["tp_occluded_indeterminate"],
@@ -594,21 +607,27 @@ def evaluate_image( gt: list[WordData],
                 'total_tightness' : total_tightness }
 
     stats = get_stats( num_tp, total_gt, total_pred, total_tightness )
+
+    # occluded = occluded_visible + occluded_indeterminate + occluded_indeterminate
+    # For Task 2(singledetrec) dont consider occluded occluded_indeterminate for ranking
     if task == "singledetrec":
         stats.update(
             get_occluded_stats(
                 num_tp_occluded_visible + num_tp_occluded_inferable,
-                total_gt_occluded_inferable + total_gt_occluded_indeterminate,
+                total_gt_occluded_visible + total_gt_occluded_inferable ,
                 stats["precision"],
                 "occluded",
             )
         )
     else:
+    # For Task 1(det) and Task 2(detrec) consider all occluded instance for ranking
         stats.update(
             get_occluded_stats(
                 num_tp_occluded, total_gt_occluded, stats["precision"], "occluded"
             )
         )
+
+    # Calculate recall for occluded_visible
     stats.update(
         get_occluded_stats(
             num_tp_occluded_visible,
@@ -618,6 +637,8 @@ def evaluate_image( gt: list[WordData],
             include_fscore=False,
         )
     )
+
+    # Calculate recall for occluded_inferable
     stats.update(
         get_occluded_stats(
             num_tp_occluded_inferable,
@@ -627,6 +648,8 @@ def evaluate_image( gt: list[WordData],
             include_fscore=False,
         )
     )
+
+    # Calculate recall for occluded_indeterminate
     stats.update(
         get_occluded_stats(
             num_tp_occluded_indeterminate,
