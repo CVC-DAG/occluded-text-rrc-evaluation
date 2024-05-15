@@ -379,7 +379,7 @@ def get_stats( num_tp: Number, num_gt: Number, num_pred: Number,
     return stats
 
 def get_occluded_stats( num_tp_occluded: Number, num_gt_occluded: Number,
-                       precision: float, prefix: str, include_fscore=True) -> dict[str,float]:
+                       precision: float, prefix: str = '') -> dict[str,float]:
     """Calculate occluded-specific statistics for recall and fscore.
     Occluded recall is the proportion of GT occludeds detected. Occluded F-score
     is between occluded recall and global precision, since submission is not
@@ -389,6 +389,7 @@ def get_occluded_stats( num_tp_occluded: Number, num_gt_occluded: Number,
       num_tp_occluded : Number of true positives matching occluded ground truth
       num_gt_occluded : Number of occluded ground truth positives in evaluation
       precision       : Overall system precision
+      prefix          : Optional prefix for return result keys (default='')
     Returns
       dict containing statistics with keys 'occluded_recall' and
         'occluded_fscore'
@@ -397,9 +398,7 @@ def get_occluded_stats( num_tp_occluded: Number, num_gt_occluded: Number,
         if (num_gt_occluded > 0) else 0.0
     fscore = hmean(recall, precision)
 
-    stats = {prefix + "_recall": recall}
-    if include_fscore:
-        stats[prefix + "_fscore"] = fscore
+    stats = {prefix + "_recall": recall, prefix + "_fscore": fscore}
     return stats
 
 def get_final_stats(totals: dict[str,Number],
@@ -442,7 +441,7 @@ def get_final_stats(totals: dict[str,Number],
                 totals["tp_occluded"],
                 totals["total_gt_occluded"],
                 final_stats["precision"],
-                "occluded",
+                "occluded"
             )
         )
 
@@ -452,8 +451,7 @@ def get_final_stats(totals: dict[str,Number],
             totals["tp_occluded_visible"],
             totals["total_gt_occluded_visible"],
             final_stats["precision"],
-            "occluded_visible",
-            include_fscore=False,
+            "occluded_visible"
         )
     )
 
@@ -463,8 +461,7 @@ def get_final_stats(totals: dict[str,Number],
             totals["tp_occluded_inferable"],
             totals["total_gt_occluded_inferable"],
             final_stats["precision"],
-            "occluded_inferable",
-            include_fscore=False,
+            "occluded_inferable"
         )
     )
 
@@ -474,8 +471,7 @@ def get_final_stats(totals: dict[str,Number],
             totals["tp_occluded_indeterminate"],
             totals["total_gt_occluded_indeterminate"],
             final_stats["precision"],
-            "occluded_indeterminate",
-            include_fscore=False,
+            "occluded_indeterminate"
         )
     )
     return final_stats
@@ -633,8 +629,7 @@ def evaluate_image( gt: list[WordData],
             num_tp_occluded_visible,
             total_gt_occluded_visible,
             stats["precision"],
-            "occluded_visible",
-            include_fscore=False,
+            "occluded_visible"
         )
     )
 
@@ -644,8 +639,7 @@ def evaluate_image( gt: list[WordData],
             num_tp_occluded_inferable,
             total_gt_occluded_inferable,
             stats["precision"],
-            "occluded_inferable",
-            include_fscore=False,
+            "occluded_inferable"
         )
     )
 
@@ -655,8 +649,7 @@ def evaluate_image( gt: list[WordData],
             num_tp_occluded_indeterminate,
             total_gt_occluded_indeterminate,
             stats["precision"],
-            "occluded_indeterminate",
-            include_fscore=False,
+            "occluded_indeterminate"
         )
     )
 
