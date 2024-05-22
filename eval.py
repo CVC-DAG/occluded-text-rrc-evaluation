@@ -379,7 +379,7 @@ def get_stats( num_tp: Number, num_gt: Number, num_pred: Number,
     return stats
 
 def get_occluded_stats( num_tp_occluded: Number, num_gt_occluded: Number,
-                       precision: float, prefix: str = '') -> dict[str,float]:
+                       precision: float, prefix: str = 'occluded') -> dict[str,float]:
     """Calculate occluded-specific statistics for recall and fscore.
     Occluded recall is the proportion of GT occludeds detected. Occluded F-score
     is between occluded recall and global precision, since submission is not
@@ -389,10 +389,9 @@ def get_occluded_stats( num_tp_occluded: Number, num_gt_occluded: Number,
       num_tp_occluded : Number of true positives matching occluded ground truth
       num_gt_occluded : Number of occluded ground truth positives in evaluation
       precision       : Overall system precision
-      prefix          : Optional prefix for return result keys (default='')
+      prefix          : Prefix for return result keys (default='occluded')
     Returns
-      dict containing statistics with keys 'occluded_recall' and
-        'occluded_fscore'
+      dict containing statistics with keys prefix + '_recall' and prefix + '_fscore'
     """
     recall = float(num_tp_occluded) / num_gt_occluded \
         if (num_gt_occluded > 0) else 0.0
